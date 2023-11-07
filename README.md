@@ -8,8 +8,8 @@ A Python script for scraping product prices from Amazon and Flipkart and compari
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
+
+
 
 ## Introduction
 
@@ -21,7 +21,8 @@ This project is a web scraping tool that allows users to compare prices of a spe
 - Selenium
 - pandas
 - texttable
-- Chrome WebDriver
+- Chrome WebDriver installed in the user's computer.
+- time
 ## Usage
 
 1. Run the script:
