@@ -17,6 +17,7 @@ def has_connection():
 
 
 p_name = input("Enter the name of the product:- ")
+num = int(input("Enter the number of products do you want to get:- "))
 path = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 
 
@@ -27,7 +28,7 @@ if not has_connection():
     sleep(3)
     exit()
 else:
-    print("Your Connection is okay. \nDirecting yout to the scrapping page...")
+    print("Your Connection is okay. \nDirecting you to the Amazon Webpage...")
     sleep(2)
 
 driver = webdriver.Chrome()
@@ -51,7 +52,7 @@ a_product = driver.find_elements(By.XPATH, "//span[@class='a-size-medium a-color
 a_price = driver.find_elements(By.XPATH, "//span[@class='a-price-whole']")
 a = 1
 for pr in a_price:
-    if a > 4:
+    if a > num:
         break
     else:
         pri = ''
@@ -64,17 +65,17 @@ for pr in a_price:
 print(len(a_prices))
 a = 1
 for p in a_product:
-    if a > 4:
+    if a > num:
         break
     else:
         a_products.append(p.text)
         a += 1
 a = 1
-if len(a_products) < 4:
+if len(a_products) < num:
     a_products.clear()
     a_product = driver.find_elements(By.XPATH, "//span[@class='a-size-base-plus a-color-base a-text-normal']")
     for p in a_product:
-        if a > 4:
+        if a > num:
             break
         else:
             a_products.append(p.text)
@@ -94,7 +95,7 @@ if not has_connection():
     sleep(3)
     exit()
 else:
-    print("Connection is okay directing to the scrapping project...")
+    print("Connection is okay directing to the Flipkart Webpage...")
     sleep(2)
 
 driver = webdriver.Chrome()
@@ -124,7 +125,7 @@ a = 1
 
 
 for pr in f_price:
-    if a > 4:
+    if a > num:
         break
     else:
         pri = ''
@@ -146,7 +147,7 @@ for pr in f_price:
 print(len(f_prices))
 a = 1
 for p in f_product:
-    if a > 4:
+    if a > num:
         break
     else:
         f_products.append(p.text)
@@ -155,7 +156,7 @@ a = 1
 if len(f_products) == 0:
     f_product = driver.find_elements(By.CLASS_NAME, "s1Q9rs")
     for p in f_product:
-        if a > 4:
+        if a > num:
             break
         else:
             f_products.append(p.text)
@@ -164,7 +165,7 @@ a = 1
 if len(f_products) == 0:
     f_product = driver.find_elements(By.CLASS_NAME, "_2WkVRV")
     for p in f_product:
-        if a > 4:
+        if a > num:
             break
         else:
             f_products.append(p.text)
@@ -178,7 +179,7 @@ if len(a_products) != len(a_prices) != len(f_products) != len(f_prices):
     print("sorry but there is some defects with the webpage they have some different tag coming for some of the names or prices,\n please bear with us now but surely it would be fixed in the future updates\nstay tuned\nthanks for using!!")
     exit()
 
-if len(a_products) < 4 and len(a_prices) < 4 and len(f_products) < 4 and len(f_prices) < 4:
+if len(a_products) < num and len(a_prices) < num and len(f_products) < num and len(f_prices) < num:
     print("No results found")
     exit()
 
@@ -208,7 +209,7 @@ else:
 
 final_ans_list = []
 
-for i in range(4):
+for i in range(num):
     ans_list = []
     ans_list.append(a_products[i])
     ans_list.append(a_prices[i])
