@@ -35,55 +35,66 @@ driver = webdriver.Chrome()
 
 
 driver.maximize_window()
-driver.get("https://www.amazon.in/")
-
-
-input_search = driver.find_element("id", "twotabsearchtextbox")
-search_button = driver.find_element("id", "nav-search-submit-button")
-input_search.send_keys(p_name)
-
-sleep(1)
-search_button.click()
 
 a_products = []
 a_prices = []
+f_products = []
+f_prices = []
 
-a_product = driver.find_elements(By.XPATH, "//span[@class='a-size-medium a-color-base a-text-normal']")
-a_price = driver.find_elements(By.XPATH, "//span[@class='a-price-whole']")
-a = 1
-for pr in a_price:
-    if a > num:
-        break
-    else:
-        pri = ''
-        for i in pr.text:
-            if i != ',':
-                pri += i
-    pri = int(pri)
-    a_prices.append(pri)
-    a += 1
-print(len(a_prices))
-a = 1
-for p in a_product:
-    if a > num:
-        break
-    else:
-        a_products.append(p.text)
+try:
+    driver.get("https://www.amazon.in/")
+
+
+    input_search = driver.find_element("id", "twotabsearchtextbox")
+    search_button = driver.find_element("id", "nav-search-submit-button")
+    input_search.send_keys(p_name)
+
+    sleep(1)
+    search_button.click()
+
+
+
+    a_product = driver.find_elements(By.XPATH, "//span[@class='a-size-medium a-color-base a-text-normal']")
+    a_price = driver.find_elements(By.XPATH, "//span[@class='a-price-whole']")
+    a = 1
+    for pr in a_price:
+        if a > num:
+            break
+        else:
+            pri = ''
+            for i in pr.text:
+                if i != ',':
+                    pri += i
+        pri = int(pri)
+        a_prices.append(pri)
         a += 1
-a = 1
-if len(a_products) < num:
-    a_products.clear()
-    a_product = driver.find_elements(By.XPATH, "//span[@class='a-size-base-plus a-color-base a-text-normal']")
+    print(len(a_prices))
+    a = 1
     for p in a_product:
         if a > num:
             break
         else:
             a_products.append(p.text)
             a += 1
+    a = 1
+    if len(a_products) < num:
+        a_products.clear()
+        a_product = driver.find_elements(By.XPATH, "//span[@class='a-size-base-plus a-color-base a-text-normal']")
+        for p in a_product:
+            if a > num:
+                break
+            else:
+                a_products.append(p.text)
+                a += 1
 
-print(len(a_products))
+    print(len(a_products))
+except Exception as e:
+    print(f"An error occurred. Server Refused to connect.")
+    print("Please try to rerun....")
+    exit()
 
-driver.quit()
+finally:
+    driver.quit()
 
 
 
@@ -103,77 +114,82 @@ driver = webdriver.Chrome()
 driver.maximize_window()
 
 
+try:
+
+    driver.get("https://www.flipkart.com/")
 
 
-driver.get("https://www.flipkart.com/")
+    input_search = driver.find_element(By.CLASS_NAME, "Pke_EE")
+    search_button = driver.find_element(By.CLASS_NAME, "_2iLD__")
+    input_search.send_keys(p_name)
+
+    sleep(1)
+    search_button.send_keys(Keys.ENTER)
 
 
-input_search = driver.find_element(By.CLASS_NAME, "Pke_EE")
-search_button = driver.find_element(By.CLASS_NAME, "_2iLD__")
-input_search.send_keys(p_name)
 
-sleep(1)
-search_button.send_keys(Keys.ENTER)
+    f_product = driver.find_elements(By.CLASS_NAME, "_4rR01T")
+    f_price = driver.find_elements(By.CLASS_NAME, "_25b18c")
 
-f_products = []
-f_prices = []
-
-f_product = driver.find_elements(By.CLASS_NAME, "_4rR01T")
-f_price = driver.find_elements(By.CLASS_NAME, "_25b18c")
-
-a = 1
+    a = 1
 
 
-for pr in f_price:
-    if a > num:
-        break
-    else:
-        pri = ''
-        countRupee = 0
-        for i in pr.text:
-            if i == "\u20B9":
-                countRupee += 1
-                continue
-            if i == '\n':
-                break
-
-            if i != ',':
-                if countRupee == 2:
+    for pr in f_price:
+        if a > num:
+            break
+        else:
+            pri = ''
+            countRupee = 0
+            for i in pr.text:
+                if i == "\u20B9":
+                    countRupee += 1
+                    continue
+                if i == '\n':
                     break
-                pri += i
-    pri = int(pri)
-    f_prices.append(pri)
-    a += 1
-print(len(f_prices))
-a = 1
-for p in f_product:
-    if a > num:
-        break
-    else:
-        f_products.append(p.text)
+
+                if i != ',':
+                    if countRupee == 2:
+                        break
+                    pri += i
+        pri = int(pri)
+        f_prices.append(pri)
         a += 1
-a = 1
-if len(f_products) == 0:
-    f_product = driver.find_elements(By.CLASS_NAME, "s1Q9rs")
+    print(len(f_prices))
+    a = 1
     for p in f_product:
         if a > num:
             break
         else:
             f_products.append(p.text)
             a += 1
-a = 1
-if len(f_products) == 0:
-    f_product = driver.find_elements(By.CLASS_NAME, "_2WkVRV")
-    for p in f_product:
-        if a > num:
-            break
-        else:
-            f_products.append(p.text)
-            a += 1
+    a = 1
+    if len(f_products) == 0:
+        f_product = driver.find_elements(By.CLASS_NAME, "s1Q9rs")
+        for p in f_product:
+            if a > num:
+                break
+            else:
+                f_products.append(p.text)
+                a += 1
+    a = 1
+    if len(f_products) == 0:
+        f_product = driver.find_elements(By.CLASS_NAME, "_2WkVRV")
+        for p in f_product:
+            if a > num:
+                break
+            else:
+                f_products.append(p.text)
+                a += 1
 
-print(len(f_products))
+    print(len(f_products))
+except Exception as e:
+    print(f"An error occurred. The server refused to connect.")
+    print("Please try to rerun....")
+    exit()
 
-driver.quit()
+finally:
+    driver.quit()
+
 
 if len(a_products) != len(a_prices) != len(f_products) != len(f_prices):
     print("sorry but there is some defects with the webpage they have some different tag coming for some of the names or prices,\n please bear with us now but surely it would be fixed in the future updates\nstay tuned\nthanks for using!!")
@@ -219,6 +235,5 @@ for i in range(num):
 
 t = Texttable()
 t.add_rows(
-    [['Amazon products', 'Amazon Prices', "Flipkart Products", "Flipkart prices"], final_ans_list[0], final_ans_list[1],
-     final_ans_list[2], final_ans_list[3]])
+    [['Amazon products', 'Amazon Prices', "Flipkart Products", "Flipkart prices"]] + final_ans_list)
 print(t.draw())
